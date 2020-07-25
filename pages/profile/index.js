@@ -1,33 +1,34 @@
-// pages/index/index.js
+// pages/profile/index.js
 Page({
 
   /**
    * Page initial data
    */
   data: {
-    restaurants: [],
+    currentUser: null,
   },
 
   /**
    * Lifecycle function--Called when page load
    */
   onLoad: function (options) {
-    const Restaurants = new wx.BaaS.TableObject('restaurants');
+    const app = getApp();
 
-    Restaurants.find().then((res) => {
-      this.setData({
-        restaurants: res.data.objects,
-      })
+    console.log('userData', app.globalData.userInfo);
+
+  },
+  userInfoHandler(data) {
+    const app = getApp();
+    wx.BaaS.auth.loginWithWechat(data).then(user => {
+      console.log('user', user);
+        app.globalData.userInfo = user;
+        this.setData({
+          currentUser: user,
+        })
+      }, err => {
+        // **err 有两种情况**：用户拒绝授权，HError 对象上会包含基本用户信息：id、openid、unionid；其他类型的错误，如网络断开、请求超时等，将返回 HError 对象（详情见下方注解）
     })
   },
-  toRestaurant: function(e) {
-    const id = e.currentTarget.dataset.id;
-
-    wx.navigateTo({
-      url: `/pages/index/detail?id=${id}`,
-    })
-  },
-
   /**
    * Lifecycle function--Called when page is initially rendered
    */

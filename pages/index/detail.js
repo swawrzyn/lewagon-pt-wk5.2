@@ -1,30 +1,36 @@
-// pages/index/index.js
+// pages/index/detail.js
 Page({
 
   /**
    * Page initial data
    */
   data: {
-    restaurants: [],
+    restaurant: {},
+    reviews: [],
   },
 
   /**
    * Lifecycle function--Called when page load
    */
   onLoad: function (options) {
+    console.log('userInfo!', getApp().globalData.userInfo);
     const Restaurants = new wx.BaaS.TableObject('restaurants');
+    const Reviews = new wx.BaaS.TableObject('reviews');
 
-    Restaurants.find().then((res) => {
+    Restaurants.get(options.id).then((res) => {
       this.setData({
-        restaurants: res.data.objects,
+        restaurant: res.data,
       })
-    })
-  },
-  toRestaurant: function(e) {
-    const id = e.currentTarget.dataset.id;
+    });
 
-    wx.navigateTo({
-      url: `/pages/index/detail?id=${id}`,
+    let query = new wx.BaaS.Query();
+
+    query.compare('restaurant_id', '=', options.id);
+
+    Reviews.setQuery(query).find().then((res) =>{
+      this.setData({
+        reviews: res.data.objects,
+      })
     })
   },
 

@@ -1,0 +1,12 @@
+<!--pages/index/detail.wxml-->
+<view class="title-box">
+    <view class="name">{{restaurant.name}}</view>
+    <view class="desc">{{restaurant.desc}}</view>
+</view>
+
+<view class="reviews">
+    <view class="title">Reviews</view>
+    <view wx:for="{{reviews}}" class="review-items" wx:for-item="review">
+        <view class="content">{{review.content}}</view>
+    </view>
+</view>
