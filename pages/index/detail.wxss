@@ -11,6 +11,44 @@
     font-weight: bold;
 }
 
+.meals {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    margin: 30rpx 0;
+}
+
+.meals .meal {
+    margin: 20rpx 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 95%;
+}
+
+.meal .left {
+    width: 75%;
+}
+
+.left .name {
+    font-weight: bold;
+    font-size: 48rpx;
+}
+
+.meal .right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 25%;
+}
+
+.right .price {
+    font-weight: bold;
+    font-size: 36rpx;
+}
+
 .reviews {
     display: flex;
     align-items: center;

@@ -4,6 +4,21 @@
     <view class="desc">{{restaurant.desc}}</view>
 </view>
 
+<view class="meals">
+    <view class="meal" wx:for="{{meals}}" wx:for-item="meal">
+        <view class="left">
+             <view class="name">{{meal.name}}</view>
+            <view class="desc">{{meal.description}}</view>
+        </view>
+        <view class="right">
+            <view class="price">{{meal.price}}元</view>
+            <button size="mini" data-id="{{meal.id}}" type="primary" bindtap="createOrder">Order</button>
+        </view>
+       
+        
+    </view>
+</view>
+
 <view class="reviews">
     <view class="title">Reviews</view>
     <view wx:for="{{reviews}}" class="review-items" wx:for-item="review" wx:key="id">

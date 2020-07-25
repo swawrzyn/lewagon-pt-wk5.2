@@ -22,6 +22,7 @@ Page({
     wx.BaaS.auth.loginWithWechat(data).then(user => {
       console.log('user', user);
         app.globalData.userInfo = user;
+        wx.setStorageSync('userInfo', user);
         this.setData({
           currentUser: user,
         })

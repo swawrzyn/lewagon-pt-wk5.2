@@ -12,6 +12,7 @@ Page({
     reviews: [],
     ratings: [1, 2, 3, 4, 5],
     rating: 'None',
+    meals: [],
   },
 
   /**
@@ -24,6 +25,7 @@ Page({
 
     const Restaurants = new wx.BaaS.TableObject('restaurants');
     const Reviews = new wx.BaaS.TableObject('reviews');
+    const Meals = new wx.BaaS.TableObject('mealsNew');
 
     Restaurants.get(options.id).then((res) => {
       this.setData({
@@ -39,6 +41,41 @@ Page({
       this.setData({
         reviews: res.data.objects,
       })
+    })
+
+    // we don't need to create another query, because the
+    // one above already works for us
+
+    Meals.setQuery(query).find().then((res) => {
+      this.setData({
+        meals: res.data.objects,
+      })
+    });
+
+
+
+  },
+  createOrder: function(e) {
+
+    const mealId = e.currentTarget.dataset.id;
+    let Orders = new wx.BaaS.TableObject('orders');
+
+    let newOrder = Orders.create();
+
+    const orderData = {
+      quantity: 1,
+      meal_id: mealId,
+    };
+
+    newOrder.set(orderData);
+
+    newOrder.save().then((res) => {
+      wx.showToast({
+        title: 'Order Sent!',
+        icon: 'success',
+        duration: 2000,
+        mask: true,
+      });
     })
   },
   createReview: function(e) {
