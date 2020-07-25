@@ -9,13 +9,19 @@ App({
     wx.BaaS.init(clientID);
 
     wx.BaaS.auth.loginWithWechat().then(user => {
+      // save user data to globalData
       this.globalData.userInfo = user;
+      // save user data to Phone Storage,
+      // two params: (key, data)
+      wx.setStorageSync('userInfo', user);
       console.log('logged in from app.js', user);
     }, err => {
       console.log('fail login');
     })
   },
   globalData: {
-    userInfo: null
+    // retrieve userinfo from storage, one param:
+    // (key)
+    userInfo: wx.getStorageSync('userInfo') || null,
   }
 })

@@ -6,7 +6,21 @@
 
 <view class="reviews">
     <view class="title">Reviews</view>
-    <view wx:for="{{reviews}}" class="review-items" wx:for-item="review">
-        <view class="content">{{review.content}}</view>
+    <view wx:for="{{reviews}}" class="review-items" wx:for-item="review" wx:key="id">
+        <view class="content">{{review.content}} - {{review.rating}}</view>
+    </view>
+    <form bindsubmit="createReview" wx:if="{{currentUser}}">
+        <view class="review-input" style="width: 100%; margin-top: 20rpx;">
+            <input style="padding: 15rpx;" name="content" placeholder="Enter your review..." />
+            <picker style="padding: 15rpx;" mode="selector" range="{{ratings}}" onchange="onRate">
+                Restaurant Rating: {{rating}}
+            </picker>
+        </view>
+        <view class="submit-button">
+            <button type="primary" formType="submit">Add Review</button>
+        </view>
+    </form>
+    <view wx:else>
+        <button type="primary" open-type="getUserInfo" bindgetuserinfo="userInfoHandler">Login to Review</button>
     </view>
 </view>
